@@ -20,13 +20,13 @@ public class BookStoreResource {
 
     @PostMapping
     private ResponseEntity<?> register(@RequestBody @Validated BookDTO book) {
-        Integer id = service.register(book);
-        return ResponseEntity.created(URI.create("v1/bookstore/" + id)).build();
+        String title = service.register(book);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{id}")
-    private ResponseEntity<?> consult(@PathVariable Integer id, @RequestParam(required = false) String title){
-        Optional<BookDTO> response = service.consult(id, title);
+    @GetMapping(value = "/{title}")
+    private ResponseEntity<?> consult(@PathVariable String title){
+        Optional<BookDTO> response = service.consult(title);
         return ResponseEntity.ok(response.orElseGet(() -> new BookDTO.Builder("Nothing found").build()));
     }
 

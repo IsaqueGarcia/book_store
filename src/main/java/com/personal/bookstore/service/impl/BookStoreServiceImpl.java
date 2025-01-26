@@ -6,6 +6,7 @@ import com.personal.bookstore.service.BookStoreService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Optional;
 
@@ -16,21 +17,21 @@ public class BookStoreServiceImpl implements BookStoreService {
     BookStoreRepository repository;
 
     @Override
-    public Integer register(BookDTO request) {
+    public String register(BookDTO request) {
         BookDTO response = repository.save(request);
-        return response.getId();
+        return response.getTitle();
     }
 
     @Override
-    public Optional<BookDTO> consult(Integer id, String... args) {
+    public Optional<BookDTO> consult(String title) {
 
         Optional<BookDTO> book = Optional.empty();
 
-        if(id == null && !StringUtils.isEmpty(args[0])){
-            book = repository.findByTitle(args[0]);
-        }else{
-            book = repository.findById(id);
+        if(StringUtils.isEmpty(title)){
+            throw new RuntimeException("The title can't be null or empty");
         }
+
+        book = repository.findByTitle(title);
 
         return book;
     }

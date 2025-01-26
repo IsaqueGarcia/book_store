@@ -1,13 +1,11 @@
 package com.personal.bookstore.repository;
 
 import com.personal.bookstore.dto.BookDTO;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-@Repository
-public interface BookStoreRepository extends CrudRepository<BookDTO, Integer> {
+public interface BookStoreRepository extends MongoRepository<BookDTO, String> {
 
     Optional<BookDTO> findByTitle(String title);
 

@@ -1,21 +1,15 @@
 package com.personal.bookstore.dto;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Getter
 @Setter
-@Entity
+@Document
 public class BookDTO {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
 
     private String title;
     private String description;
@@ -35,14 +29,6 @@ public class BookDTO {
         this.ageGroup = ageGroup;
         this.price = price;
         this.author = author;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getAuthor() {

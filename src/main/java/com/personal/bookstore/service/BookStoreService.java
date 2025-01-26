@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface BookStoreService {
 
-    Integer register(BookDTO request);
-    Optional<BookDTO> consult(Integer id, String... title);
+    String register(BookDTO request);
+    Optional<BookDTO> consult(String title);
 
 }
