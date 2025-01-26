@@ -5,6 +5,8 @@ services:
   mongo:
     image: mongo
     restart: always
+    networks:
+      - hk-network
     ports:
       - '27017:27017'
 #    environment:
@@ -16,8 +18,14 @@ services:
     restart: always
     ports:
       - 8081:8081
+    networks:
+      - hk-network
 #    environment:
 #      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
 #      ME_CONFIG_MONGODB_ADMINPASSWORD: pass
 #      ME_CONFIG_MONGODB_URL: mongodb://admin:pass@mongo:27017/
 #      ME_CONFIG_BASICAUTH: false
+
+networks:
+  hk-network:
+    driver: "bridge"
