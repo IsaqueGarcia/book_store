@@ -2,7 +2,7 @@ name: Deploy App on EC2
 on:
   pull_request:
     branches:
-      - [main, master]
+      ['main', 'master']
 
 jobs:
   deploy:
