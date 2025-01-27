@@ -22,17 +22,15 @@ jobs:
           TARGET: "/home/ec2-user"
           EXCLUDE: ".git"
 
-  database:
-    needs: copy
-    runs-on: self-hosted
-    steps:
-      - name: install compose
-        run: sudo apt-get install docker-compose
-      - name: Initialize database
-        run: docker compose up
+#  database:
+#    needs: copy
+#    runs-on: self-hosted
+#    steps:
+#      - name: Initialize database
+#        run: docker compose up
 
   deploy:
-    needs: database
+    #needs: database
     runs-on: self-hosted
     steps:
       - name: Build app image
