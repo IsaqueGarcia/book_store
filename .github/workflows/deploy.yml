@@ -22,12 +22,17 @@ jobs:
           TARGET: "/home/ec2-user"
           EXCLUDE: ".git"
 
-  deploy:
+  database:
     needs: copy
     runs-on: self-hosted
     steps:
       - name: Initialize database
-        run: docker compose up -d
+        run: docker compose up
+
+  deploy:
+    needs: database
+    runs-on: self-hosted
+    steps:
       - name: Build app image
         run: docker build -t bookstore .
       - name: Run build
