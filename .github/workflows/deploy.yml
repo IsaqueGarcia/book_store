@@ -1,0 +1,26 @@
+name: Deploy App on EC2
+on:
+  pull_request:
+    branches:
+      - [main, master]
+
+jobs:
+  deploy:
+    name: Update files in EC2 and deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the files
+        uses: actions/checkout@v3
+
+      - name: copy files
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
+          SOURCE: "./"
+          REMOTE_HOST: "ec2-user"
+          REMOTE_USER: "ec2-user"
+          TARGET: "/home/ec2-user"
+          EXCLUDE: ".git"
+
+      - name: deploy
+        run: "cat /home/ec2-user/Dockerfile"
