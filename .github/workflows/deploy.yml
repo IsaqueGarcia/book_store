@@ -5,8 +5,8 @@ on:
       ['main', 'master']
 
 jobs:
-  deploy:
-    name: Update files in EC2 and deploy app
+  copy:
+    name: Update files in EC2
     runs-on: ubuntu-latest
     steps:
       - name: checkout the files
@@ -22,5 +22,14 @@ jobs:
           TARGET: "/home/ec2-user"
           EXCLUDE: ".git"
 
-      - name: deploy
-        run: "cat /home/ec2-user/Dockerfile"
+  deploy:
+    needs: copy
+    runs-on: self-hosted
+    steps:
+      - name: Initialize database
+        run: docker compose up -d
+      - name: Build app image
+        run: docker build -t bookstore .
+      - name: Run build
+        run: docker run -p 8080:8080 --network=bookstore_hk-network bookstore
+
