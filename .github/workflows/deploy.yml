@@ -26,6 +26,8 @@ jobs:
     needs: copy
     runs-on: self-hosted
     steps:
+      - name: install compose
+        run: sudo apt-get install docker-compose
       - name: Initialize database
         run: docker compose up
 
