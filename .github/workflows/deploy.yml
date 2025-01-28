@@ -26,7 +26,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: pull docker image
-        run: docker pull isaquegarcia1/bookstore:latest
+        run: docker pull isaquegarcia1/bookstore:zero-touch
 
       - name: remove container
         run: docker rm -f container_bookstore
