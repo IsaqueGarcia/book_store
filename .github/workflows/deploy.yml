@@ -16,7 +16,7 @@ jobs:
         run: docker build . -t isaquegarcia1/bookstore:zero-touch
 
       - name: login into docker hub
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p {{secrets.DOCKER_PASS}}
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASS}}
 
       - name: docker push image
         run: docker push isaquegarcia1/bookstore:zero-touch
