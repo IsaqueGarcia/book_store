@@ -6,9 +6,12 @@ on:
 
 jobs:
   build:
-    name: Update files in EC2
+    name: build and upload docker image
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
       - name: generate image
         run: docker build . -t isaquegarcia1/bookstore:zero-touch
 
