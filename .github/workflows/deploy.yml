@@ -5,36 +5,26 @@ on:
       ['main', 'master']
 
 jobs:
-  copy:
+  build:
     name: Update files in EC2
     runs-on: ubuntu-latest
     steps:
-      - name: checkout the files
-        uses: actions/checkout@v3
+      - name: generate image
+        run: docker build . -t isaquegarcia1/bookstore:zero-touch
 
-      - name: copy files
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
-          SOURCE: "./"
-          REMOTE_HOST: "ec2-3-88-235-105.compute-1.amazonaws.com"
-          REMOTE_USER: "ec2-user"
-          TARGET: "/home/ec2-user"
-          EXCLUDE: ".git"
+      - name: login into docker hub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p {{secrets.DOCKER_PASS}}
 
-#  database:
-#    needs: copy
-#    runs-on: self-hosted
-#    steps:
-#      - name: Initialize database
-#        run: docker compose up
+      - name: docker push image
+        run: docker push isaquegarcia1/bookstore:zero-touch
 
   deploy:
-    #needs: database
+    needs: build
     runs-on: self-hosted
     steps:
-      - name: Build app image
-        run: docker build -t bookstore .
-      - name: Run build
-        run: docker run -p 8080:8080 --network=bookstore_hk-network bookstore
+      - name: pull docker image
+        run: docker pull isaquegarcia1/bookstore:zero-touch
+
+      - name: Download and run app
+        run: docker run -p 8080:8080 --network=bookstore_hk-network isaquegarcia1/bookstore:zero-touch
 
