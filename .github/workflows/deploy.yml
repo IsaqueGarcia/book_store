@@ -26,8 +26,11 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: pull docker image
-        run: docker pull isaquegarcia1/bookstore:zero-touch
+        run: docker pull isaquegarcia1/bookstore:latest
+
+      - name: remove container
+        run: docker rm -f container_bookstore
 
       - name: Download and run app
-        run: docker run -p 8080:8080 --network=bookstore_hk-network isaquegarcia1/bookstore:zero-touch
+        run: docker run -p 8080:8080 --network=ec2-user_hk-network --name container_bookstore isaquegarcia1/bookstore:zero-touch
 
